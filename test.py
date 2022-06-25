@@ -86,12 +86,12 @@ if __name__ == '__main__':
         visuals = model.get_current_visuals()  # get image results
 
         #print(list(visuals.values())[0])
-        print(data)
+        print(data['A'])
 
         # Create IntegratedGradients object and get attributes
         output = F.softmax(list(visuals.values())[0], dim=1)
         #transformed_img = transform(data)
-        transformed_img = data
+        transformed_img = data['A']
         integrated_gradients = IntegratedGradients(model)
         attributions_ig = integrated_gradients.attribute(data, n_steps=200) #target=pred_label_idx
 
