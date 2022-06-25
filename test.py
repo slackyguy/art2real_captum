@@ -6,6 +6,7 @@ from util.visualizer import save_images
 from util import html
 
 #from captum.attr import Saliency
+import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 
