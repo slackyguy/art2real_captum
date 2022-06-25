@@ -12,6 +12,12 @@ import torchvision.transforms as transforms
 from captum.insights import AttributionVisualizer, Batch
 from captum.insights.attr_vis.features import ImageFeature
 
+from captum.attr import IntegratedGradients
+from captum.attr import GradientShap
+from captum.attr import Saliency
+from captum.attr import NoiseTunnel
+from captum.attr import visualization as viz
+
 def baseline_func(input):
     return input * 0
 
@@ -30,27 +36,33 @@ if __name__ == '__main__':
     model.setup(opt)               # regular setup: load and print networks; create schedulers
 
     # Captum
-    normalize = transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-    visualizer = AttributionVisualizer(
-        models=[model],
-        score_func=lambda o: torch.nn.functional.softmax(o, 1),
-        classes=[ "Portrait" ],
-        features=[
-            ImageFeature(
-                "Photo",
-                baseline_transforms=[baseline_func],
-                input_transforms=[normalize],
-            )
-        ],
-        dataset=dataset,
-    )
+    # normalize = transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+    # visualizer = AttributionVisualizer(
+    #     models=[model],
+    #     score_func=lambda o: torch.nn.functional.softmax(o, 1),
+    #     classes=[ "Portrait" ],
+    #     features=[
+    #         ImageFeature(
+    #             "Photo",
+    #             baseline_transforms=[baseline_func],
+    #             input_transforms=[normalize],
+    #         )
+    #     ],
+    #     dataset=dataset,
+    # )
+    # visualizer.render()
+    
+    # prediction_score, pred_label_idx = torch.topk(output, 1)
+    # pred_label_idx.squeeze_()
+    # predicted_label = idx_to_labels[str(pred_label_idx.item())][1]
+    # print('Predicted:', predicted_label, '(', prediction_score.squeeze().item(), ')')
 
-    visualizer.render()
+
     #print(model)
     #saliency = Saliency(model)
     # show a screenshot if using notebook non-interactively
-    from IPython.display import Image
-    Image(filename='img/captum_insights.png')
+    # from IPython.display import Image
+    # Image(filename='img/captum_insights.png')
 
     # create a website
     web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.epoch))  # define the website directory
@@ -63,7 +75,32 @@ if __name__ == '__main__':
             break
         model.set_input(data)  # unpack data from data loader
         model.test()           # run inference
+
         visuals = model.get_current_visuals()  # get image results
+
+        print(visuals.values)
+
+        # Create IntegratedGradients object and get attributes
+        output = F.softmax(visuals.values[0], dim=1)
+        transformed_img = transform(data)
+        integrated_gradients = IntegratedGradients(model)
+        attributions_ig = integrated_gradients.attribute(data, n_steps=200) #target=pred_label_idx
+
+        # create custom colormap for visualizing the result
+        default_cmap = LinearSegmentedColormap.from_list('custom blue', 
+                                                        [(0, '#ffffff'),
+                                                        (0.25, '#000000'),
+                                                        (1, '#000000')], N=256)
+
+
+        # visualize the results using the visualize_image_attr helper method
+        _ = viz.visualize_image_attr_multiple(np.transpose(attributions_ig.squeeze().cpu().detach().numpy(), (1,2,0)),
+                                    np.transpose(transformed_img.squeeze().cpu().detach().numpy(), (1,2,0)),
+                                    methods=["original_image", "heat_map"],
+                                    signs=['all', 'positive'],
+                                    cmap=default_cmap,
+                                    show_colorbar=True)
+
         img_path = model.get_image_paths()     # get image paths
         if i % 5 == 0:  # save images to an HTML file
             print('processing (%04d)-th image... %s' % (i, img_path))
