@@ -1,5 +1,6 @@
 import os
 import torch
+import torch.nn as nn
 from collections import OrderedDict
 from abc import ABC, abstractmethod
 from . import networks
@@ -42,6 +43,20 @@ class BaseModel(ABC):
         self.optimizers = []
         self.image_paths = []
         self.metric = None # used for learning rate policy 'plateau'
+        
+        #super(Net, self).__init__()
+
+        self.conv1 = nn.Conv2d(3, 6, 5)
+        self.pool1 = nn.MaxPool2d(2, 2)
+        self.pool2 = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(6, 16, 5)
+        self.fc1 = nn.Linear(16 * 5 * 5, 120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 10)
+        self.relu1 = nn.ReLU()
+        self.relu2 = nn.ReLU()
+        self.relu3 = nn.ReLU()
+        self.relu4 = nn.ReLU()
 
     @staticmethod
     def modify_commandline_options(parser, is_train):
@@ -136,6 +151,15 @@ class BaseModel(ABC):
                 errors_ret[name] = float(getattr(self, 'loss_' + name))  # float(...) works for both scalar tensor and float number
         return errors_ret
 
+    def forward(self, x):
+        x = self.pool1(self.relu1(self.conv1(x)))
+        x = self.pool2(self.relu2(self.conv2(x)))
+        x = x.view(-1, 16 * 5 * 5)
+        x = self.relu3(self.fc1(x))
+        x = self.relu4(self.fc2(x))
+        x = self.fc3(x)
+        return x
+
     def save_networks(self, epoch):
         """Save all the networks to the disk.
 
@@ -191,6 +215,7 @@ class BaseModel(ABC):
                 # patch InstanceNorm checkpoints prior to 0.4
                 for key in list(state_dict.keys()):  # need to copy keys here because we mutate in loop
                     self.__patch_instance_norm_state_dict(state_dict, net, key.split('.'))
+                print(state_dict)
                 net.load_state_dict(state_dict)
 
     def print_networks(self, verbose):
