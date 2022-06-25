@@ -27,6 +27,9 @@ if __name__ == '__main__':
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     model = create_model(opt)      # create a model given opt.model and other options
 
+    model.setup(opt)               # regular setup: load and print networks; create schedulers
+
+    # Captum
     normalize = transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     visualizer = AttributionVisualizer(
         models=[model],
@@ -46,7 +49,8 @@ if __name__ == '__main__':
     #print(model)
     #saliency = Saliency(model)
 
-    model.setup(opt)               # regular setup: load and print networks; create schedulers
+
+
     # create a website
     web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.epoch))  # define the website directory
     webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
