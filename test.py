@@ -22,6 +22,12 @@ from captum.attr import visualization as viz
 def baseline_func(input):
     return input * 0
 
+transform = transforms.Compose([
+ transforms.Resize(256),
+ transforms.CenterCrop(224),
+ transforms.ToTensor()
+])
+
 
 if __name__ == '__main__':
     opt = TestOptions().parse()  # get test options
@@ -79,11 +85,13 @@ if __name__ == '__main__':
 
         visuals = model.get_current_visuals()  # get image results
 
-        print(list(visuals.values())[0])
+        #print(list(visuals.values())[0])
+        print(data)
 
         # Create IntegratedGradients object and get attributes
         output = F.softmax(list(visuals.values())[0], dim=1)
-        transformed_img = transform(data)
+        #transformed_img = transform(data)
+        transformed_img = data
         integrated_gradients = IntegratedGradients(model)
         attributions_ig = integrated_gradients.attribute(data, n_steps=200) #target=pred_label_idx
 
