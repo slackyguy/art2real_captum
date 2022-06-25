@@ -48,8 +48,9 @@ if __name__ == '__main__':
     visualizer.render()
     #print(model)
     #saliency = Saliency(model)
-
-
+    # show a screenshot if using notebook non-interactively
+    from IPython.display import Image
+    Image(filename='img/captum_insights.png')
 
     # create a website
     web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.epoch))  # define the website directory
