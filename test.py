@@ -79,10 +79,10 @@ if __name__ == '__main__':
 
         visuals = model.get_current_visuals()  # get image results
 
-        print(list(word_freq.values())[0])
+        print(list(visuals.values())[0])
 
         # Create IntegratedGradients object and get attributes
-        output = F.softmax(list(word_freq.values())[0], dim=1)
+        output = F.softmax(list(visuals.values())[0], dim=1)
         transformed_img = transform(data)
         integrated_gradients = IntegratedGradients(model)
         attributions_ig = integrated_gradients.attribute(data, n_steps=200) #target=pred_label_idx
