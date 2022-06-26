@@ -86,14 +86,23 @@ if __name__ == '__main__':
         visuals = model.get_current_visuals()  # get image results
 
         #print(list(visuals.values())[0])
-        print(data['A'])
+        #print(data['A'])
+        print(dataset[i])
 
         # Create IntegratedGradients object and get attributes
         output = F.softmax(list(visuals.values())[0], dim=1)
         #transformed_img = transform(data)
-        transformed_img = data['A']
+        #transformed_img = data['A']
         net = list(model.load_networks(opt.epoch))
         integrated_gradients = IntegratedGradients(net[0])
+        
+        #https://gilberttanner.com/blog/interpreting-pytorch-models-with-captum/
+        img = Image.open('/content/art2real_captum/datasets/monet2photo/testA/00001.jpg')
+        transformed_img = transform(img)
+        input = transform_normalize(transformed_img)
+        input = input.unsqueeze(0)
+
+        #attributions_ig = integrated_gradients.attribute(transformed_img.cuda(), n_steps=200) #target=pred_label_idx
         attributions_ig = integrated_gradients.attribute(transformed_img.cuda(), n_steps=200) #target=pred_label_idx
 
         # create custom colormap for visualizing the result
