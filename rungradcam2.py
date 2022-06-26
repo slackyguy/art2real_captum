@@ -155,7 +155,7 @@ if __name__ == '__main__':
     # You can also pass aug_smooth=True and eigen_smooth=True, to apply smoothing.
     grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
 
-    rgb_img = Image.new('RGB', (255,255))
+    rgb_img = Image.new('RGB', (224,224))
 
     # In this example grayscale_cam has only one image in the batch:
     grayscale_cam = grayscale_cam[0, :]
