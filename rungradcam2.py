@@ -86,6 +86,7 @@ if __name__ == '__main__':
     resnet_layers = list(resnet.children())
     for layer in resnet_layers:
         print(len(layer))
+        for child in layer.children():
 
     pil_img = Image.open(list(dataset)[sample_index]['A_paths'][0])
 
