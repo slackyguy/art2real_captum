@@ -5,7 +5,7 @@ from models import create_model
 from util.visualizer import save_images
 from util import html
 
-import PIL
+from PIL import Image
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -13,7 +13,7 @@ import torchvision.models as models
 from torchvision import transforms
 from torchvision.utils import make_grid, save_image
 
-#from gradcam.utils import visualize_cam
+from gradcam.utils import visualize_cam
 from gradcam import GradCAM, GradCAMpp
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
