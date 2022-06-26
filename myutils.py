@@ -23,6 +23,7 @@ def tensor_to_image(tensor):
     #arr_ = np.squeeze(arr) # you can give axis attribute if you wanna squeeze in specific dimension
     #plt.imshow(arr_)
     img_data = tensor.detach().cpu().numpy()[0] #Image.fromarray(arr_)
+    img_data = (img_data + 1) * 127.5
 
     img = Image.fromarray(img_data)
     return img.convert('RGB')
