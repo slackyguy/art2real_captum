@@ -147,7 +147,7 @@ if __name__ == '__main__':
     # will be used for every image in the batch.
     # Here we use ClassifierOutputTarget, but you can define your own custom targets
     # That are, for example, combinations of categories, or specific outputs in a non standard model.
-    targets = [ClassifierOutputTarget(281)]
+    targets = [ClassifierOutputTarget(1)]
 
     # You can also pass aug_smooth=True and eigen_smooth=True, to apply smoothing.
     grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
