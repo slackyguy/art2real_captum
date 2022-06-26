@@ -29,6 +29,10 @@ transform = transforms.Compose([
  transforms.CenterCrop(224),
  transforms.ToTensor()
 ])
+transform_normalize = transforms.Normalize(
+     mean=[0.485, 0.456, 0.406],
+     std=[0.229, 0.224, 0.225]
+ )
 
 
 if __name__ == '__main__':
@@ -89,7 +93,7 @@ if __name__ == '__main__':
 
         #print(list(visuals.values())[0])
         #print(data['A'])
-        print(list(dataset)[i]['A_paths'])
+        print(list(dataset)[i]['A_paths'][0]) #transform_normalize
 
         # Create IntegratedGradients object and get attributes
         output = F.softmax(list(visuals.values())[0], dim=1)
@@ -99,7 +103,7 @@ if __name__ == '__main__':
         integrated_gradients = IntegratedGradients(net[0])
         
         #https://gilberttanner.com/blog/interpreting-pytorch-models-with-captum/
-        img = Image.open('/content/art2real_captum/datasets/monet2photo/testA/00001.jpg')
+        img = Image.open('./datasets/monet2photo/testA/00001.jpg')
         transformed_img = transform(img)
         input = transform_normalize(transformed_img)
         input = input.unsqueeze(0)
