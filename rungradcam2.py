@@ -100,7 +100,7 @@ if __name__ == '__main__':
     outputs = activations_and_grads(sample['B'].cuda())
 
     for layer in target_layers:
-        print(layer.conv_block.output)
+        print(layer.output)
 
     i = 0
     for output in outputs:
