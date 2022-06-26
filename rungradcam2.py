@@ -23,7 +23,7 @@ from pytorch_grad_cam.utils.model_targets import FasterRCNNBoxScoreTarget, Class
 from pytorch_grad_cam.utils.image import show_cam_on_image
 from torchvision.models import resnet50
 
-from myutils import CustomClassifierOutputTarget
+from myutils import CustomClassifierOutputTarget, tensor_to_image
 
 # #from captum.attr import Saliency
 # import torch
@@ -78,7 +78,12 @@ if __name__ == '__main__':
     resnet = list(model.load_networks(opt.epoch))[0]
 
     #target_layers = [resnet.layer4[-1]]
-    target_layers = torch.nn.Sequential(*list(resnet.children())[:-3]) #:-1
+    target_layers = torch.nn.Sequential(*list(resnet.children())[:-1]) #:-1
+
+    my_img = tensor_to_image(target_layers)
+    my_img.save("out2.jpg")
+
+
     #target_layers = resnet.model
     #target_layers = resnet.model.layers[-1]
 
