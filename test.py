@@ -109,7 +109,7 @@ if __name__ == '__main__':
         input = input.unsqueeze(0)
 
         #attributions_ig = integrated_gradients.attribute(transformed_img.cuda(), n_steps=200) #target=pred_label_idx
-        attributions_ig = integrated_gradients.attribute(input, n_steps=200) #target=pred_label_idx
+        attributions_ig = integrated_gradients.attribute(input.cuda(), n_steps=200) #target=pred_label_idx
 
         # create custom colormap for visualizing the result
         default_cmap = LinearSegmentedColormap.from_list('custom blue', 
