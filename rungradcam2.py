@@ -62,18 +62,19 @@ if __name__ == '__main__':
     opt.serial_batches = True  # disable data shuffling; comment this line if results on randomly chosen images are needed.
     opt.no_flip = True    # no flip; comment this line if results on flipped images are needed.
     opt.display_id = -1   # no visdom display; the test code saves the results to a HTML file.
-    opt.verbose = False
+    opt.verbose = True
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     model = create_model(opt)      # create a model given opt.model and other options
 
     model.setup(opt)               # regular setup: load and print networks; create schedulers
 
     #model = resnet50(pretrained=True)
-    resnet = models.resnet101(pretrained=True)
-    #resnet = list(model.load_networks(opt.epoch))[0]
+    #resnet = models.resnet101(pretrained=True)
+    resnet = list(model.load_networks(opt.epoch))[0]
 
-    target_layers = [resnet.layer4[-1]]
-    #target_layers = torch.nn.Sequential(*list(resnet.children())[:-1])
+    #target_layers = [resnet.layer4[-1]]
+    layers_size = len(resnet.children())
+    target_layers = torch.nn.Sequential(*list(resnet.children())[layers_size-2]) #:-1
 
     pil_img = Image.open(list(dataset)[0]['A_paths'][0])
 
@@ -160,3 +161,4 @@ if __name__ == '__main__':
     # In this example grayscale_cam has only one image in the batch:
     grayscale_cam = grayscale_cam[0, :]
     visualization = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
+    im1 = rgb_img.save("./gradmap.jpg")
