@@ -66,7 +66,12 @@ if __name__ == '__main__':
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     model = create_model(opt)      # create a model given opt.model and other options
 
+    sample_index = 0
+
     model.setup(opt)               # regular setup: load and print networks; create schedulers
+    model.set_input(list(dataset)[sample_index])  # unpack data from data loader
+    model.test()           # run inference
+    visuals = model.get_current_visuals()
 
     #model = resnet50(pretrained=True)
     #resnet = models.resnet101(pretrained=True)
@@ -77,8 +82,9 @@ if __name__ == '__main__':
     #target_layers = resnet.model
     #target_layers = resnet.model.layers[-1]
     target_layers = torch.nn.Sequential(*list(resnet.children())[:-1])
+    print(len(resnet.children()))
 
-    pil_img = Image.open(list(dataset)[0]['A_paths'][0])
+    pil_img = Image.open(list(dataset)[sample_index]['A_paths'][0])
 
     #https://github.com/vickyliin/gradcam_plus_plus-pytorch/blob/master/example.ipynb
     torch_img = transforms.Compose([
@@ -140,9 +146,6 @@ if __name__ == '__main__':
     # with GradCAM(model=model, target_layers=target_layers, use_cuda=args.use_cuda) as cam:
     #   ...
 
-    model.set_input(list(dataset)[0])  # unpack data from data loader
-    model.test()           # run inference
-    visuals = model.get_current_visuals()
     print(model.visual_names)
     #print(visuals)
     #torch.cuda.empty_cache()
