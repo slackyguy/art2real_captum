@@ -94,7 +94,7 @@ if __name__ == '__main__':
         transformed_img = data['A']
         net = list(model.load_networks(opt.epoch))
         integrated_gradients = IntegratedGradients(net[0])
-        attributions_ig = integrated_gradients.attribute(transformed_img, n_steps=200) #target=pred_label_idx
+        attributions_ig = integrated_gradients.attribute(transformed_img.cuda(), n_steps=200) #target=pred_label_idx
 
         # create custom colormap for visualizing the result
         default_cmap = LinearSegmentedColormap.from_list('custom blue', 
