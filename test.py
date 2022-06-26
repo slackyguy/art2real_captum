@@ -87,7 +87,7 @@ if __name__ == '__main__':
 
         #print(list(visuals.values())[0])
         #print(data['A'])
-        print(dataset[i])
+        print(list(dataset)[i])
 
         # Create IntegratedGradients object and get attributes
         output = F.softmax(list(visuals.values())[0], dim=1)
