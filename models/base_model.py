@@ -217,7 +217,7 @@ class BaseModel(ABC):
                 for key in list(state_dict.keys()):  # need to copy keys here because we mutate in loop
                     self.__patch_instance_norm_state_dict(state_dict, net, key.split('.'))
                 #print(state_dict)
-                self.nets.add(net)
+                self.nets.append(net)
                 net.load_state_dict(state_dict)
 
     def print_networks(self, verbose):
