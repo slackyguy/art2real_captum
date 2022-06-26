@@ -138,7 +138,8 @@ if __name__ == '__main__':
     model.set_input(list(dataset)[0])  # unpack data from data loader
     model.test()           # run inference
     visuals = model.get_current_visuals()
-    print(visuals)
+    print(model.visual_names())
+    #print(visuals)
     #torch.cuda.empty_cache()
 
     # We have to specify the target we want to generate
