@@ -72,17 +72,16 @@ if __name__ == '__main__':
     print(sample)
 
     model.setup(opt)               # regular setup: load and print networks; create schedulers
-    resnet = list(model.nets)[0] # model.load_networks(opt.epoch)
+    resnet = model.nets[0] # model.load_networks(opt.epoch)
 
-    model_methods = [method_name for method_name in dir(model)
-                  if callable(getattr(model, method_name))]
-    print(model_methods)
+    # model_methods = [method_name for method_name in dir(model)
+    #               if callable(getattr(model, method_name))]
+    # print(model_methods)
 
-    resnet_methods = [method_name for method_name in dir(model)
-                  if callable(getattr(model, method_name))]
-    print(resnet_methods)
-
-    print(resnet.get_current_losses())
+    # resnet_methods = [method_name for method_name in dir(model)
+    #               if callable(getattr(model, method_name))]
+    # print(resnet_methods)
+    # print(resnet.get_current_losses())
 
     model.set_input(sample)  # unpack data from data loader
     model.test()           # run inference
@@ -93,18 +92,19 @@ if __name__ == '__main__':
 
     #target_layers = [resnet.layer4[-1]]
     layers_len = len(list(resnet.children()))
-    target_layers = torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
+    target_layers = resnet.children() #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
 
     activations_and_grads = ActivationsAndGradients(
             resnet.model, target_layers, None) # reshape_transform
     outputs = activations_and_grads(sample['A'].cuda())
-    print(len(outputs[0]))
 
-    my_img = tensor_to_image(outputs[0])
-    my_img.save("out2.jpg")
-    print(visuals)
-
-    pil_img = Image.open(list(dataset)[sample_index]['A_paths'][0])
+    for i, output in outputs:
+        print(len(output))
+        my_img = tensor_to_image(output)
+        my_img.save("out" + i + ".jpg")
+    
+    #print(visuals)
+    #pil_img = Image.open(sample['A_paths'][0])
 
     #https://github.com/vickyliin/gradcam_plus_plus-pytorch/blob/master/example.ipynb
     # torch_img = transforms.Compose([
