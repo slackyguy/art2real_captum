@@ -23,6 +23,8 @@ from pytorch_grad_cam.utils.model_targets import FasterRCNNBoxScoreTarget, Class
 from pytorch_grad_cam.utils.image import show_cam_on_image
 from torchvision.models import resnet50
 
+from myutils import CustomClassifierOutputTarget
+
 # #from captum.attr import Saliency
 # import torch
 # import torch.nn.functional as F
@@ -148,7 +150,7 @@ if __name__ == '__main__':
     # will be used for every image in the batch.
     # Here we use ClassifierOutputTarget, but you can define your own custom targets
     # That are, for example, combinations of categories, or specific outputs in a non standard model.
-    targets = [ClassifierOutputTarget(284)]
+    targets = [CustomClassifierOutputTarget(284)]
 
     # You can also pass aug_smooth=True and eigen_smooth=True, to apply smoothing.
     grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
