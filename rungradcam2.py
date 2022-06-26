@@ -96,7 +96,7 @@ if __name__ == '__main__':
     #print(len(list(target_layers)))
 
     model.fc3.register_forward_hook(get_activation('fc3'))
-    output = model(sample['A'])
+    output = resnet(sample['A'])
     activation['fc3']
     print(activation)
 
