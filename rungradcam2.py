@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
     activations_and_grads = ActivationsAndGradients(
             resnet.model, target_layers, None) # reshape_transform
-    outputs = activations_and_grads(sample['A'].cuda())
+    outputs = activations_and_grads(sample['B'].cuda())
 
     i = 0
     for output in outputs:
