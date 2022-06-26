@@ -107,7 +107,8 @@ if __name__ == '__main__':
         images.extend([torch_img.cpu(), heatmap, heatmap_pp, result, result_pp])
         
     grid_image = make_grid(images, nrow=5)
-    transforms.ToPILImage()(grid_image)
+    output_maps = transforms.ToPILImage()(grid_image)
+    print(output_maps)
     
     
     # image = np.array(img)
