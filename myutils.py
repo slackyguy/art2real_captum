@@ -33,3 +33,9 @@ def tensor_to_image(tensor):
     #     assert tensor.shape[0] == 1
     #     tensor = tensor[0]
     # return Image.fromarray(tensor)
+
+activation = {}
+def get_activation(name):
+    def hook(model, input, output):
+        activation[name] = output.detach()
+    return hook

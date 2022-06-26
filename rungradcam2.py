@@ -24,7 +24,7 @@ from pytorch_grad_cam.utils.image import show_cam_on_image
 from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
 from torchvision.models import resnet50
 
-from myutils import CustomClassifierOutputTarget, tensor_to_image
+from myutils import CustomClassifierOutputTarget, tensor_to_image, activation, get_activation
 
 # #from captum.attr import Saliency
 # import torch
@@ -95,27 +95,24 @@ if __name__ == '__main__':
     target_layers = [resnet.model[18].conv_block] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
-    from tensorflow import keras
-    from tensorflow.keras import layers
+    model.fc3.register_forward_hook(get_activation('fc3'))
+    output = model(sample['A'])
+    activation['fc3']
+    print(activation)
 
-    model_tf = Sequential(list(resnet.model[18].conv_block.children()))
-    extractor = keras.Model(inputs=model_tf.inputs,
-                            outputs=[layer.output for layer in model_tf.layers])
-    features = extractor(sample['A'])
-
-    activations_and_grads = ActivationsAndGradients(
-            resnet.model, target_layers, None) # reshape_transform
-    outputs = activations_and_grads(sample['B'].cuda())
+    # activations_and_grads = ActivationsAndGradients(
+    #         resnet.model, target_layers, None) # reshape_transform
+    # outputs = activations_and_grads(sample['A'].cuda())
 
     # for layer in target_layers:
     #     print(layer.output)
 
-    i = 0
-    for output in outputs:
-        print(len(output))
-        my_img = tensor_to_image(output)
-        my_img.save("out" + str(i) + ".jpg")
-        i = i + 1
+    # i = 0
+    # for output in outputs:
+    #     print(len(output))
+    #     my_img = tensor_to_image(output)
+    #     my_img.save("out" + str(i) + ".jpg")
+    #     i = i + 1
     
     #print(visuals)
     #pil_img = Image.open(sample['A_paths'][0])
