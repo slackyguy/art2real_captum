@@ -74,6 +74,14 @@ if __name__ == '__main__':
     model.setup(opt)               # regular setup: load and print networks; create schedulers
     resnet = list(model.nets)[0] # model.load_networks(opt.epoch)
 
+    model_methods = [method_name for method_name in dir(model)
+                  if callable(getattr(model, method_name))]
+    print(model_methods)
+
+    resnet_methods = [method_name for method_name in dir(model)
+                  if callable(getattr(model, method_name))]
+    print(resnet_methods)
+
     model.set_input(sample)  # unpack data from data loader
     model.test()           # run inference
     visuals = model.get_current_visuals()
@@ -82,7 +90,8 @@ if __name__ == '__main__':
     
 
     #target_layers = [resnet.layer4[-1]]
-    target_layers = torch.nn.Sequential(*list(resnet.children())[:-2]) #:-1
+    layers_len = len(list(resnet.children()))
+    target_layers = torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
 
     activations_and_grads = ActivationsAndGradients(
             resnet.model, target_layers, None) # reshape_transform
