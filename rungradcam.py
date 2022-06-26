@@ -67,8 +67,8 @@ if __name__ == '__main__':
     model.setup(opt)               # regular setup: load and print networks; create schedulers
 
     #model = resnet50(pretrained=True)
-    #resnet = models.resnet101(pretrained=True)
-    resnet = list(model.load_networks(opt.epoch))[0]
+    resnet = models.resnet101(pretrained=True)
+    #resnet = list(model.load_networks(opt.epoch))[0]
     #target_layers = [net.layer4[-1]]
 
     pil_img = Image.open(list(dataset)[0]['A_paths'][0])
