@@ -73,8 +73,7 @@ if __name__ == '__main__':
     resnet = list(model.load_networks(opt.epoch))[0]
 
     #target_layers = [resnet.layer4[-1]]
-    layers_size = len(resnet.children())
-    target_layers = torch.nn.Sequential(*list(resnet.children())[layers_size-2]) #:-1
+    target_layers = torch.nn.Sequential(*list(resnet.children())[:-2]) #:-1
 
     pil_img = Image.open(list(dataset)[0]['A_paths'][0])
 
