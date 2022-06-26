@@ -70,10 +70,6 @@ if __name__ == '__main__':
     resnet = models.resnet101(pretrained=True)
     #resnet = list(model.load_networks(opt.epoch))[0]
 
-    last_layer = [net.layer4[-1]]
-    #last_layer = torch.nn.Sequential(*list(resnet.children())[:-1])
-    print(last_layer)
-
     pil_img = Image.open(list(dataset)[0]['A_paths'][0])
 
     #https://github.com/vickyliin/gradcam_plus_plus-pytorch/blob/master/example.ipynb
