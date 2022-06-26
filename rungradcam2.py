@@ -120,7 +120,7 @@ if __name__ == '__main__':
     #                             mean=[0.485, 0.456, 0.406],
     #                             std=[0.229, 0.224, 0.225])
 
-    cam = GradCAM(model=model, target_layers=target_layers, use_cuda=True)
+    cam = GradCAM(model=resnet, target_layers=target_layers, use_cuda=True)
 
     # # Construct the CAM object once, and then re-use it on many images:
     # #cam = GradCAM(model=model, target_layers=target_layers, use_cuda=True)
