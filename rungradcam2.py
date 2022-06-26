@@ -21,6 +21,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 from pytorch_grad_cam import GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad
 from pytorch_grad_cam.utils.model_targets import FasterRCNNBoxScoreTarget, ClassifierOutputTarget
 from pytorch_grad_cam.utils.image import show_cam_on_image
+from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
 from torchvision.models import resnet50
 
 from myutils import CustomClassifierOutputTarget, tensor_to_image
@@ -62,14 +63,16 @@ if __name__ == '__main__':
     opt.serial_batches = True  # disable data shuffling; comment this line if results on randomly chosen images are needed.
     opt.no_flip = True    # no flip; comment this line if results on flipped images are needed.
     opt.display_id = -1   # no visdom display; the test code saves the results to a HTML file.
-    opt.verbose = True
+    opt.verbose = False
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     model = create_model(opt)      # create a model given opt.model and other options
 
     sample_index = 0
+    sample = list(dataset)[sample_index]
+    print(sample)
 
     model.setup(opt)               # regular setup: load and print networks; create schedulers
-    model.set_input(list(dataset)[sample_index])  # unpack data from data loader
+    model.set_input(sample)  # unpack data from data loader
     model.test()           # run inference
     visuals = model.get_current_visuals()
 
@@ -81,6 +84,11 @@ if __name__ == '__main__':
     target_layers = torch.nn.Sequential(*list(resnet.children())[:-1]) #:-1
     #test_output = target_layers.output
     #print(len(test_output))
+
+    activations_and_grads = ActivationsAndGradients(
+            resnet.model, target_layers, None) # reshape_transform
+    outputs = activations_and_grads(sample['A'])
+    print(len(outputs))
 
     #my_img = tensor_to_image(test_output)
     #my_img.save("out2.jpg")
