@@ -93,7 +93,7 @@ if __name__ == '__main__':
         #transformed_img = transform(data)
         transformed_img = data['A']
         integrated_gradients = IntegratedGradients(model)
-        attributions_ig = integrated_gradients.attribute(data, n_steps=200) #target=pred_label_idx
+        attributions_ig = integrated_gradients.attribute(transformed_img, n_steps=200) #target=pred_label_idx
 
         # create custom colormap for visualizing the result
         default_cmap = LinearSegmentedColormap.from_list('custom blue', 
