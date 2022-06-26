@@ -79,8 +79,10 @@ if __name__ == '__main__':
 
     #target_layers = [resnet.layer4[-1]]
     target_layers = torch.nn.Sequential(*list(resnet.children())[:-1]) #:-1
+    test_output = target_layers.output
+    print(len(test_output))
 
-    my_img = tensor_to_image(target_layers)
+    my_img = tensor_to_image(test_output)
     my_img.save("out2.jpg")
 
 
