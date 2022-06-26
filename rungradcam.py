@@ -108,7 +108,8 @@ if __name__ == '__main__':
         
     grid_image = make_grid(images, nrow=5)
     output_maps = transforms.ToPILImage()(grid_image)
-    print(output_maps)
+    im1 = output_maps.save("./gradmap.jpg")
+    print(im1)
     
     
     # image = np.array(img)
