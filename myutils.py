@@ -19,10 +19,10 @@ class CustomClassifierOutputTarget:
         return model_output[:, self.category]
 
 def tensor_to_image(tensor):
-    arr = np.ndarray(tensor)#This is your tensor
-    arr_ = np.squeeze(arr) # you can give axis attribute if you wanna squeeze in specific dimension
+    #arr = np.ndarray(tensor)#This is your tensor
+    #arr_ = np.squeeze(arr) # you can give axis attribute if you wanna squeeze in specific dimension
     #plt.imshow(arr_)
-    return Image.fromarray(arr_)
+    return tensor.numpy()[0] #Image.fromarray(arr_)
     # tensor = tensor*255
     # tensor = np.array(tensor.cpu().detach().numpy(), dtype=np.uint8)
     # if np.ndim(tensor)>3:
