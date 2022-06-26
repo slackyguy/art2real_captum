@@ -87,7 +87,7 @@ if __name__ == '__main__':
 
     activations_and_grads = ActivationsAndGradients(
             resnet.model, target_layers, None) # reshape_transform
-    outputs = activations_and_grads(sample['A'])
+    outputs = activations_and_grads(sample['A'].cuda())
     print(len(outputs))
 
     #my_img = tensor_to_image(test_output)
