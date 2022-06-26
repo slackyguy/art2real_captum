@@ -70,7 +70,7 @@ if __name__ == '__main__':
     restnet = list(model.load_networks(opt.epoch))[0]
     #target_layers = [net.layer4[-1]]
 
-    pil_img = Image.open(list(dataset)[i]['A_paths'][0])
+    pil_img = Image.open(list(dataset)[0]['A_paths'][0])
 
     #https://github.com/vickyliin/gradcam_plus_plus-pytorch/blob/master/example.ipynb
     torch_img = transforms.Compose([
