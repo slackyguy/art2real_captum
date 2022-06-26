@@ -60,16 +60,19 @@ if __name__ == '__main__':
     opt.serial_batches = True  # disable data shuffling; comment this line if results on randomly chosen images are needed.
     opt.no_flip = True    # no flip; comment this line if results on flipped images are needed.
     opt.display_id = -1   # no visdom display; the test code saves the results to a HTML file.
-    opt.verbose = True
+    opt.verbose = False
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     model = create_model(opt)      # create a model given opt.model and other options
 
     model.setup(opt)               # regular setup: load and print networks; create schedulers
 
     #model = resnet50(pretrained=True)
-    resnet = models.resnet101(pretrained=True)
-    #resnet = list(model.load_networks(opt.epoch))[0]
+    #resnet = models.resnet101(pretrained=True)
+    resnet = list(model.load_networks(opt.epoch))[0]
+    print(resnet.layers)
     #target_layers = [net.layer4[-1]]
+    last_layer = torch.nn.Sequential(*list(resnet.children())[:-1])
+    print(last_layer)
 
     pil_img = Image.open(list(dataset)[0]['A_paths'][0])
 
