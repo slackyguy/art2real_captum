@@ -72,12 +72,14 @@ if __name__ == '__main__':
     print(sample)
 
     model.setup(opt)               # regular setup: load and print networks; create schedulers
+    resnet = list(model.nets)[0] # model.load_networks(opt.epoch)
+
     model.set_input(sample)  # unpack data from data loader
     model.test()           # run inference
     visuals = model.get_current_visuals()
 
     #resnet = models.resnet101(pretrained=True) #resnet50
-    resnet = list(model.load_networks(opt.epoch))[0]
+    
 
     #target_layers = [resnet.layer4[-1]]
     target_layers = torch.nn.Sequential(*list(resnet.children())[:-2]) #:-1
@@ -89,6 +91,7 @@ if __name__ == '__main__':
 
     my_img = tensor_to_image(outputs[0])
     my_img.save("out2.jpg")
+    print(visuals)
 
     pil_img = Image.open(list(dataset)[sample_index]['A_paths'][0])
 

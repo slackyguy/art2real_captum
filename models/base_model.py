@@ -43,6 +43,7 @@ class BaseModel(ABC):
         self.optimizers = []
         self.image_paths = []
         self.metric = None # used for learning rate policy 'plateau'
+        self.nets = []
         
         #super(Net, self).__init__()
 
@@ -216,8 +217,8 @@ class BaseModel(ABC):
                 for key in list(state_dict.keys()):  # need to copy keys here because we mutate in loop
                     self.__patch_instance_norm_state_dict(state_dict, net, key.split('.'))
                 #print(state_dict)
+                self.nets.push(net)
                 net.load_state_dict(state_dict)
-                yield net
 
     def print_networks(self, verbose):
         """Print the total number of parameters in the network and (if verbose) network architecture
