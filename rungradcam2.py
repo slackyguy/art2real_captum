@@ -82,6 +82,8 @@ if __name__ == '__main__':
                   if callable(getattr(model, method_name))]
     print(resnet_methods)
 
+    print(resnet.get_current_losses())
+
     model.set_input(sample)  # unpack data from data loader
     model.test()           # run inference
     visuals = model.get_current_visuals()
