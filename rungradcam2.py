@@ -135,13 +135,19 @@ if __name__ == '__main__':
     # with GradCAM(model=model, target_layers=target_layers, use_cuda=args.use_cuda) as cam:
     #   ...
 
+    model.set_input(list(dataset)[0])  # unpack data from data loader
+    model.test()           # run inference
+    visuals = model.get_current_visuals()
+    print(visuals)
+    #torch.cuda.empty_cache()
+
     # We have to specify the target we want to generate
     # the Class Activation Maps for.
     # If targets is None, the highest scoring category
     # will be used for every image in the batch.
     # Here we use ClassifierOutputTarget, but you can define your own custom targets
     # That are, for example, combinations of categories, or specific outputs in a non standard model.
-    targets = [FasterRCNNBoxScoreTarget()]
+    targets = [ClassifierOutputTarget(281)]
 
     # You can also pass aug_smooth=True and eigen_smooth=True, to apply smoothing.
     grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
