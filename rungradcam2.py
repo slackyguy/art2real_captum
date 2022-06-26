@@ -78,7 +78,7 @@ if __name__ == '__main__':
     resnet = list(model.load_networks(opt.epoch))[0]
 
     #target_layers = [resnet.layer4[-1]]
-    target_layers = torch.nn.Sequential(*list(resnet.children())[26]) #:-1
+    target_layers = torch.nn.Sequential(*list(resnet.children())[:-3]) #:-1
     #target_layers = resnet.model
     #target_layers = resnet.model.layers[-1]
 
