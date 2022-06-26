@@ -92,7 +92,7 @@ if __name__ == '__main__':
         output = F.softmax(list(visuals.values())[0], dim=1)
         #transformed_img = transform(data)
         transformed_img = data['A']
-        net = list(model.load_networks())
+        net = list(model.load_networks(opt.epoch))
         integrated_gradients = IntegratedGradients(net[0])
         attributions_ig = integrated_gradients.attribute(transformed_img, n_steps=200) #target=pred_label_idx
 
