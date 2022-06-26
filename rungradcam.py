@@ -67,9 +67,9 @@ if __name__ == '__main__':
     model.setup(opt)               # regular setup: load and print networks; create schedulers
 
     #model = resnet50(pretrained=True)
-    resnet = models.resnet101(pretrained=True)
-    resnet1 = list(model.load_networks(opt.epoch))[0]
-    print(resnet1.model)
+    #resnet = models.resnet101(pretrained=True)
+    resnet = list(model.load_networks(opt.epoch))[0]
+    #print(resnet1.model)
 
     pil_img = Image.open(list(dataset)[2]['A_paths'][0])
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     configs = [
         # dict(model_type='alexnet', arch=alexnet, layer_name='features_11'),
         # dict(model_type='vgg', arch=vgg, layer_name='features_29'),
-        dict(model_type='resnet', arch=resnet, layer_name='layer4')
+        dict(model_type='resnet', arch=resnet.model, layer_name='layer4')
         # dict(model_type='densenet', arch=densenet, layer_name='features_norm5'),
         # dict(model_type='squeezenet', arch=squeezenet, layer_name='features_12_expand3x3_activation')
     ]
