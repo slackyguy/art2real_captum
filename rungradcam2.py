@@ -92,7 +92,7 @@ if __name__ == '__main__':
     #resnet = models.resnet101(pretrained=True) #resnet50
 
     #target_layers = [resnet.layer4[-1]]
-    target_layers = [resnet.model[16], resnet.model[17], resnet.model[18]] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
+    target_layers = [resnet.model[16]] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
     activations_and_grads = ActivationsAndGradients(
