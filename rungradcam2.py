@@ -69,7 +69,6 @@ if __name__ == '__main__':
 
     sample_index = 0
     sample = list(dataset)[sample_index]
-    print(sample)
 
     model.setup(opt)               # regular setup: load and print networks; create schedulers
     resnet = model.nets[0] # model.load_networks(opt.epoch)
@@ -88,7 +87,7 @@ if __name__ == '__main__':
     # model.test()           # run inference
     # visuals = model.get_current_visuals()
 
-    print(resnet.model[18])
+    print(resnet.model)
 
     #resnet = models.resnet101(pretrained=True) #resnet50
 
