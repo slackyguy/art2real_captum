@@ -100,8 +100,8 @@ if __name__ == '__main__':
 
     i = 0
     for output in outputs:
-        print(len(output[i]))
-        my_img = tensor_to_image(output[i])
+        print(len(output))
+        my_img = tensor_to_image(output)
         my_img.save("out" + i + ".jpg")
         i = i + 1
     
