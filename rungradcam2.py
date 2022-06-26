@@ -88,7 +88,7 @@ if __name__ == '__main__':
     # model.test()           # run inference
     # visuals = model.get_current_visuals()
 
-    print(resnet)
+    print(resnet.model[18])
 
     #resnet = models.resnet101(pretrained=True) #resnet50
 
