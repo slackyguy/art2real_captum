@@ -90,8 +90,8 @@ if __name__ == '__main__':
     outputs = activations_and_grads(sample['A'].cuda())
     print(len(outputs))
 
-    #my_img = tensor_to_image(test_output)
-    #my_img.save("out2.jpg")
+    my_img = tensor_to_image(outputs)
+    my_img.save("out2.jpg")
 
 
     #target_layers = resnet.model
