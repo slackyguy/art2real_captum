@@ -98,10 +98,12 @@ if __name__ == '__main__':
             resnet.model, target_layers, None) # reshape_transform
     outputs = activations_and_grads(sample['A'].cuda())
 
-    for i, output in outputs:
-        print(len(output))
-        my_img = tensor_to_image(output)
+    i = 0
+    for output in outputs:
+        print(len(output[i]))
+        my_img = tensor_to_image(output[i])
         my_img.save("out" + i + ".jpg")
+        i = i + 1
     
     #print(visuals)
     #pil_img = Image.open(sample['A_paths'][0])
