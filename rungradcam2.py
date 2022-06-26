@@ -83,16 +83,16 @@ if __name__ == '__main__':
     # print(resnet.get_current_losses())
 
     # RUN TEST
-    # model.set_input(sample)  # unpack data from data loader
-    # model.test()           # run inference
-    # visuals = model.get_current_visuals()
+    model.set_input(sample)  # unpack data from data loader
+    model.test()           # run inference
+    visuals = model.get_current_visuals()
 
     print(resnet.model)
 
     #resnet = models.resnet101(pretrained=True) #resnet50
 
     #target_layers = [resnet.layer4[-1]]
-    target_layers = [resnet.model[18]] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
+    target_layers = [resnet.model[18].conv_block] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
     activations_and_grads = ActivationsAndGradients(
