@@ -87,7 +87,7 @@ if __name__ == '__main__':
     model.test()           # run inference
     visuals = model.get_current_visuals()
 
-    print(resnet.model)
+    #print(resnet.model)
 
     #resnet = models.resnet101(pretrained=True) #resnet50
 
@@ -95,11 +95,11 @@ if __name__ == '__main__':
     target_layers = [resnet.model[18].conv_block] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
-    resnet.model.fc3.register_forward_hook(get_activation('fc3'))
-    output = resnet.model(sample['A'].cuda())
-    print(len(output))
+    # resnet.model.fc3.register_forward_hook(get_activation('fc3'))
+    # output = resnet.model(sample['A'].cuda())
+    # print(len(output))
     #activation['fc3']
-    print(activation)
+    #print(activation)
 
     # activations_and_grads = ActivationsAndGradients(
     #         resnet.model, target_layers, None) # reshape_transform
