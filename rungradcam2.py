@@ -97,7 +97,8 @@ if __name__ == '__main__':
 
     model.fc3.register_forward_hook(get_activation('fc3'))
     output = resnet(sample['A'].cuda())
-    activation['fc3']
+    print(len(output))
+    #activation['fc3']
     print(activation)
 
     # activations_and_grads = ActivationsAndGradients(
