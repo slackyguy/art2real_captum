@@ -95,12 +95,20 @@ if __name__ == '__main__':
     target_layers = [resnet.model[18].conv_block] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
+    from tensorflow import keras
+    from tensorflow.keras import layers
+
+    model_tf = Sequential(list(resnet.model[18].conv_block.children()))
+    extractor = keras.Model(inputs=model_tf.inputs,
+                            outputs=[layer.output for layer in model_tf.layers])
+    features = extractor(sample['A'])
+
     activations_and_grads = ActivationsAndGradients(
             resnet.model, target_layers, None) # reshape_transform
     outputs = activations_and_grads(sample['B'].cuda())
 
-    for layer in target_layers:
-        print(layer.output)
+    # for layer in target_layers:
+    #     print(layer.output)
 
     i = 0
     for output in outputs:
