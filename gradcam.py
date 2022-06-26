@@ -7,9 +7,9 @@ from util import html
 
 from PIL import Image
 
-from pytorch_grad_cam import GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad
-from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
-from pytorch_grad_cam.utils.image import show_cam_on_image
+from pytorch_gradcam import GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad
+from pytorch_gradcam.utils.model_targets import ClassifierOutputTarget
+from pytorch_gradcam.utils.image import show_cam_on_image
 from torchvision.models import resnet50
 
 #from captum.attr import Saliency
