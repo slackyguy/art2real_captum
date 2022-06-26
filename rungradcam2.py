@@ -78,16 +78,15 @@ if __name__ == '__main__':
     resnet = list(model.load_networks(opt.epoch))[0]
 
     #target_layers = [resnet.layer4[-1]]
-    #target_layers = torch.nn.Sequential(*list(resnet.children())[:-2]) #:-1
+    target_layers = torch.nn.Sequential(*list(resnet.children())[26]) #:-1
     #target_layers = resnet.model
     #target_layers = resnet.model.layers[-1]
-    target_layers = torch.nn.Sequential(*list(resnet.children())[:-1])
 
-    resnet_layers = list(resnet.children())
-    for layer in resnet_layers:
-        print(len(layer))
-        for child in layer.children():
-            print(len(child))
+    # resnet_layers = list(resnet.children())
+    # for layer in resnet_layers:
+    #     print(len(layer))
+    #     for child in layer.children():
+    #         print(len(child))
 
     pil_img = Image.open(list(dataset)[sample_index]['A_paths'][0])
 
