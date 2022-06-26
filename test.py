@@ -5,6 +5,8 @@ from models import create_model
 from util.visualizer import save_images
 from util import html
 
+from PIL import Image
+
 #from captum.attr import Saliency
 import torch.nn.functional as F
 import torchvision
@@ -87,7 +89,7 @@ if __name__ == '__main__':
 
         #print(list(visuals.values())[0])
         #print(data['A'])
-        print(list(dataset)[i])
+        print(list(dataset)[i]['A_paths'])
 
         # Create IntegratedGradients object and get attributes
         output = F.softmax(list(visuals.values())[0], dim=1)
@@ -103,7 +105,7 @@ if __name__ == '__main__':
         input = input.unsqueeze(0)
 
         #attributions_ig = integrated_gradients.attribute(transformed_img.cuda(), n_steps=200) #target=pred_label_idx
-        attributions_ig = integrated_gradients.attribute(transformed_img.cuda(), n_steps=200) #target=pred_label_idx
+        attributions_ig = integrated_gradients.attribute(input, n_steps=200) #target=pred_label_idx
 
         # create custom colormap for visualizing the result
         default_cmap = LinearSegmentedColormap.from_list('custom blue', 
