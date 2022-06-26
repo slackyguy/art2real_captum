@@ -76,14 +76,11 @@ if __name__ == '__main__':
     model.test()           # run inference
     visuals = model.get_current_visuals()
 
-    #model = resnet50(pretrained=True)
-    #resnet = models.resnet101(pretrained=True)
+    #resnet = models.resnet101(pretrained=True) #resnet50
     resnet = list(model.load_networks(opt.epoch))[0]
 
     #target_layers = [resnet.layer4[-1]]
-    target_layers = torch.nn.Sequential(*list(resnet.children())[:-1]) #:-1
-    #test_output = target_layers.output
-    #print(len(test_output))
+    target_layers = torch.nn.Sequential(*list(resnet.children())[:-2]) #:-1
 
     activations_and_grads = ActivationsAndGradients(
             resnet.model, target_layers, None) # reshape_transform
@@ -93,64 +90,31 @@ if __name__ == '__main__':
     my_img = tensor_to_image(outputs[0])
     my_img.save("out2.jpg")
 
-
-    #target_layers = resnet.model
-    #target_layers = resnet.model.layers[-1]
-
-    # resnet_layers = list(resnet.children())
-    # for layer in resnet_layers:
-    #     print(len(layer))
-    #     for child in layer.children():
-    #         print(len(child))
-
     pil_img = Image.open(list(dataset)[sample_index]['A_paths'][0])
 
     #https://github.com/vickyliin/gradcam_plus_plus-pytorch/blob/master/example.ipynb
-    torch_img = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor()
-        ])(pil_img).to(device)
+    # torch_img = transforms.Compose([
+    # transforms.Resize((224, 224)),
+    # transforms.ToTensor()
+    #     ])(pil_img).to(device)
     
-    normed_torch_img = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])(torch_img)[None]
-    input_tensor = normed_torch_img
-    
-    # configs = [
-    #     dict(model_type='resnet', arch=resnet, layer_name='layer4')
-    # ]
-    # for config in configs:
-    #     config['arch'].to(device).eval()
-    # cams = [
-    #     [cls.from_config(**config) for cls in (GradCAM, GradCAMpp)]
-    #     for config in configs
-    # ]
-    
-    # images = []
-    # for gradcam, gradcam_pp in cams:
-    #     mask, _ = gradcam(normed_torch_img)
-    #     heatmap, result = visualize_cam(mask, torch_img)
-    #     mask_pp, _ = gradcam_pp(normed_torch_img)
-    #     heatmap_pp, result_pp = visualize_cam(mask_pp, torch_img)
-    #     images.extend([torch_img.cpu(), heatmap, heatmap_pp, result, result_pp])
-    # grid_image = make_grid(images, nrow=5)
-    # output_maps = transforms.ToPILImage()(grid_image)
-    # im1 = output_maps.save("./gradmap.jpg")
-    # print(im1)
-    
+    # normed_torch_img = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])(torch_img)[None]
+    # input_tensor = normed_torch_img
+
+
+
     
     # image = np.array(img)
     # rgb_img = np.float32(image) / 255
-    # # transformed_img = transform(img)
-    # # input = transform_normalize(transformed_img)
-    
-    # # Create an input tensor image for your model.
-    # # Note: input_tensor can be a batch tensor with several images!
+    # transformed_img = transform(img)
+    # input = transform_normalize(transformed_img)
     
     # input_tensor = input.unsqueeze(0)
     # input_tensor = preprocess_image(rgb_img,
     #                             mean=[0.485, 0.456, 0.406],
     #                             std=[0.229, 0.224, 0.225])
 
-    cam = GradCAM(model=resnet, target_layers=target_layers, use_cuda=True)
+    #cam = GradCAM(model=resnet, target_layers=target_layers, use_cuda=True)
 
     # # Construct the CAM object once, and then re-use it on many images:
     # #cam = GradCAM(model=model, target_layers=target_layers, use_cuda=True)
@@ -165,7 +129,6 @@ if __name__ == '__main__':
     # with GradCAM(model=model, target_layers=target_layers, use_cuda=args.use_cuda) as cam:
     #   ...
 
-    print(model.visual_names)
     #print(visuals)
     #torch.cuda.empty_cache()
 
@@ -175,14 +138,13 @@ if __name__ == '__main__':
     # will be used for every image in the batch.
     # Here we use ClassifierOutputTarget, but you can define your own custom targets
     # That are, for example, combinations of categories, or specific outputs in a non standard model.
-    targets = [CustomClassifierOutputTarget(284)]
+    # targets = [CustomClassifierOutputTarget(284)]
 
     # You can also pass aug_smooth=True and eigen_smooth=True, to apply smoothing.
-    grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
-
-    rgb_img = Image.new('RGB', (224,224))
+    # grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
+    # rgb_img = Image.new('RGB', (224,224))
 
     # In this example grayscale_cam has only one image in the batch:
-    grayscale_cam = grayscale_cam[0, :]
-    visualization = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
-    im1 = rgb_img.save("./gradmap.jpg")
+    # grayscale_cam = grayscale_cam[0, :]
+    # visualization = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
+    # im1 = rgb_img.save("./gradmap.jpg")
