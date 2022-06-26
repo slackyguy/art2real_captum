@@ -70,7 +70,7 @@ if __name__ == '__main__':
     resnet = models.resnet101(pretrained=True)
     #resnet = list(model.load_networks(opt.epoch))[0]
 
-    pil_img = Image.open(list(dataset)[0]['A_paths'][0])
+    pil_img = Image.open(list(dataset)[1]['A_paths'][0])
 
     #https://github.com/vickyliin/gradcam_plus_plus-pytorch/blob/master/example.ipynb
     torch_img = transforms.Compose([
