@@ -82,7 +82,7 @@ if __name__ == '__main__':
     #target_layers = resnet.model
     #target_layers = resnet.model.layers[-1]
     target_layers = torch.nn.Sequential(*list(resnet.children())[:-1])
-    print(len(resnet.children()))
+    print(list(len(resnet.children())))
 
     pil_img = Image.open(list(dataset)[sample_index]['A_paths'][0])
 
