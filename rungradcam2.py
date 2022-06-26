@@ -95,8 +95,8 @@ if __name__ == '__main__':
     target_layers = [resnet.model[18].conv_block] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
-    resnet.fc3.register_forward_hook(get_activation('fc3'))
-    output = resnet(sample['A'].cuda())
+    resnet.model.fc3.register_forward_hook(get_activation('fc3'))
+    output = resnet.model(sample['A'].cuda())
     print(len(output))
     #activation['fc3']
     print(activation)
