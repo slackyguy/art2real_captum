@@ -23,7 +23,9 @@ def tensor_to_image(tensor):
     #arr_ = np.squeeze(arr) # you can give axis attribute if you wanna squeeze in specific dimension
     #plt.imshow(arr_)
     img_data = tensor.detach().cpu().numpy()[0] #Image.fromarray(arr_)
-    return Image.fromarray(img_data)
+
+    img = Image.fromarray(img_data)
+    return img.convert('RGB')
     # tensor = tensor*255
     # tensor = np.array(tensor.cpu().detach().numpy(), dtype=np.uint8)
     # if np.ndim(tensor)>3:
