@@ -102,7 +102,7 @@ if __name__ == '__main__':
     for output in outputs:
         print(len(output))
         my_img = tensor_to_image(output)
-        my_img.save("out" + i + ".jpg")
+        my_img.save("out" + str(i) + ".jpg")
         i = i + 1
     
     #print(visuals)
