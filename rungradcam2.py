@@ -83,12 +83,14 @@ if __name__ == '__main__':
     # print(resnet_methods)
     # print(resnet.get_current_losses())
 
-    model.set_input(sample)  # unpack data from data loader
-    model.test()           # run inference
-    visuals = model.get_current_visuals()
+    # RUN TEST
+    # model.set_input(sample)  # unpack data from data loader
+    # model.test()           # run inference
+    # visuals = model.get_current_visuals()
+
+    print(resnet)
 
     #resnet = models.resnet101(pretrained=True) #resnet50
-    
 
     #target_layers = [resnet.layer4[-1]]
     layers_len = len(list(resnet.children()))
