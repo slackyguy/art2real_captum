@@ -82,8 +82,6 @@ if __name__ == '__main__':
     web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.epoch))  # define the website directory
     webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
 
-    torch.cuda.empty_cache()
-
     if opt.eval:
         model.eval()
     for i, data in enumerate(dataset):
@@ -91,6 +89,7 @@ if __name__ == '__main__':
             break
         model.set_input(data)  # unpack data from data loader
         model.test()           # run inference
+        torch.cuda.empty_cache()
 
         visuals = model.get_current_visuals()  # get image results
 
