@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     #resnet.model.fc3.register_forward_hook(get_activation('fc3'))
 
-    model.netG_A.model[18].conv_block[1].register_forward_hook(get_activation('Conv2d'))
+    model.netG_A.model[18].conv_block[5].register_forward_hook(get_activation('Conv2d'))
     output = resnet.model(sample['A'].cuda())
     # print(len(output))
     activation['Conv2d']
