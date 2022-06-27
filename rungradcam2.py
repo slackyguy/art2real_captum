@@ -105,8 +105,10 @@ if __name__ == '__main__':
     # (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
     #print(model.netG_A)
     conv_layer = model.netG_A.module.model[18].conv_block
-    print(conv_layer)
-    target_layers = [conv_layer] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
+    conv_layer_5 = conv_layer[5]
+    print(conv_layer_5)
+    
+    #target_layers = [conv_layer] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
     #resnet.model.fc3.register_forward_hook(get_activation('fc3'))
@@ -114,7 +116,7 @@ if __name__ == '__main__':
     conv_layer.register_forward_hook(get_activation('Conv2d'))
     output = resnet.model(sample['A'].cuda())
     # print(len(output))
-    activation['Conv2d']
+    print(activation['Conv2d'])
     #print(activation)
 
     # activations_and_grads = ActivationsAndGradients(
