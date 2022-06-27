@@ -107,10 +107,10 @@ if __name__ == '__main__':
     conv_layer = model.netG_A.module.model[18].conv_block
     
     # Conv2d
-    #conv_layer_5 = conv_layer[5]
+    conv_layer_5 = conv_layer[5]
     #print(conv_layer_5)
 
-    conv_layer.register_forward_hook(get_activation('Conv2d'))
+    conv_layer_5.register_forward_hook(get_activation('Conv2d'))
     output = resnet.model(sample['A'].cuda())
     # print(len(output))
     print(len(activation['Conv2d']))
