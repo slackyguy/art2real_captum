@@ -80,8 +80,6 @@ if __name__ == '__main__':
 
     #resnet = models.resnet101(pretrained=True) #resnet50
     #target_layers = [resnet.layer4[-1]]
-
-    print(model.netG_A)
     
     #(18): ResnetBlock((conv_block): Sequential(
     # (0): ReflectionPad2d((1, 1, 1, 1))
@@ -93,16 +91,12 @@ if __name__ == '__main__':
     # (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
     #print(model.netG_A)
     conv_layer = model.netG_A.module.model[18].conv_block
-    
-    # Conv2d
-    conv_layer_5 = conv_layer[5]
-    #print(conv_layer_5)
 
-    conv_layer_5.register_forward_hook(get_activation('Conv2d'))
+    conv_layer[6].register_forward_hook(get_activation('Conv2d'))
     output = resnet.model(sample['A'].cuda())
     # print(len(output))
+    print(len(activation['Conv2d'][0]))
     print(len(activation['Conv2d'][0][1]))
-    print(activation['Conv2d'][0][1])
 
 
     #output_img = tensor_to_image(activation['Conv2d'])
