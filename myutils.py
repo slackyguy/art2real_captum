@@ -37,5 +37,6 @@ def tensor_to_image(tensor):
 activation = {}
 def get_activation(name):
     def hook(model, input, output):
-        activation[name] = output.detach()
+        activation[name]['input'] = input.detach()
+        activation[name]['output'] = output.detach()
     return hook
