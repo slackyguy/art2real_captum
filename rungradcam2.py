@@ -91,13 +91,13 @@ if __name__ == '__main__':
     # (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
     print(model.netG_A)
     conv2d_layer = model.netG_A.module.model[18].conv_block[5]
-    convTranspose2d_layer = model.netG_A.module.model[19]
+    tanh_layer = model.netG_A.module.model[27]
 
-    convTranspose2d_layer.register_forward_hook(get_activation('Conv2d'))
+    tanh_layer.register_forward_hook(get_activation('Conv2d'))
     output = resnet.model(sample['A'].cuda())
 
-    # print(len(activation['Conv2d'][0]))
-    # print(len(activation['Conv2d'][0][1]))
+    print(len(activation['Conv2d']['output'][0]))
+    print(len(activation['Conv2d']['output'][0][1]))
 
 
     #output_img = tensor_to_image(activation['Conv2d'])
