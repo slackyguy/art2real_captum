@@ -96,7 +96,7 @@ if __name__ == '__main__':
     tanh_layer.register_forward_hook(get_activation('tanh_layer'))
     output = resnet.model(sample['A'].cuda())
 
-    
+    print(len(activation['tanh_layer']['output']))
 
 
     output_img = tensor_to_image(activation['tanh_layer']['output'])
