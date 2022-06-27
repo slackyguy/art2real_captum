@@ -99,9 +99,8 @@ if __name__ == '__main__':
     conv_layer_5.register_forward_hook(get_activation('Conv2d'))
     output = resnet.model(sample['A'].cuda())
     # print(len(output))
-    print(len(activation['Conv2d']))
+    print(len(activation['Conv2d'][0]))
 
-    print(activation['Conv2d'][0])
 
     #output_img = tensor_to_image(activation['Conv2d'])
     #output_img.save('Conv2d.jpg')
