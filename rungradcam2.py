@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # (4): ReflectionPad2d((1, 1, 1, 1))
     # (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
     # (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
-    #print(model.netG_A)
+    print(model.netG_A)
     conv_layer = model.netG_A.module.model[18].conv_block
 
     conv_layer[6].register_forward_hook(get_activation('Conv2d'))
