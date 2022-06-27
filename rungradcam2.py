@@ -87,19 +87,32 @@ if __name__ == '__main__':
     model.test()           # run inference
     visuals = model.get_current_visuals()
 
+    #print(model.netG_A)
+
     #print(resnet.model)
 
     #resnet = models.resnet101(pretrained=True) #resnet50
 
     #target_layers = [resnet.layer4[-1]]
-    target_layers = [resnet.model[18].conv_block] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
+    #(18): ResnetBlock((conv_block): Sequential(
+    
+    # (0): ReflectionPad2d((1, 1, 1, 1))
+    # (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+    # (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    # (3): ReLU(inplace=True)
+    # (4): ReflectionPad2d((1, 1, 1, 1))
+    # (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
+    # (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    target_layers = [model.netG_A.model[18].conv_block[1]] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
-    # resnet.model.fc3.register_forward_hook(get_activation('fc3'))
-    # output = resnet.model(sample['A'].cuda())
+    #resnet.model.fc3.register_forward_hook(get_activation('fc3'))
+
+    model.netG_A.model[18].conv_block[1].register_forward_hook(get_activation('Conv2d'))
+    output = resnet.model(sample['A'].cuda())
     # print(len(output))
-    #activation['fc3']
-    #print(activation)
+    activation['Conv2d']
+    print(activation)
 
     # activations_and_grads = ActivationsAndGradients(
     #         resnet.model, target_layers, None) # reshape_transform
