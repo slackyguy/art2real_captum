@@ -73,29 +73,15 @@ if __name__ == '__main__':
     model.setup(opt)               # regular setup: load and print networks; create schedulers
     resnet = model.nets[0] # model.load_networks(opt.epoch)
 
-    # model_methods = [method_name for method_name in dir(model)
-    #               if callable(getattr(model, method_name))]
-    # print(model_methods)
-
-    # resnet_methods = [method_name for method_name in dir(model)
-    #               if callable(getattr(model, method_name))]
-    # print(resnet_methods)
-    # print(resnet.get_current_losses())
-
     # RUN TEST
-    model.set_input(sample)  # unpack data from data loader
-    model.test()           # run inference
-    visuals = model.get_current_visuals()
-
-    #print(model.netG_A)
-
-    #print(resnet.model)
+    # model.set_input(sample)  # unpack data from data loader
+    # model.test()           # run inference
+    # visuals = model.get_current_visuals()
 
     #resnet = models.resnet101(pretrained=True) #resnet50
-
     #target_layers = [resnet.layer4[-1]]
-    #(18): ResnetBlock((conv_block): Sequential(
     
+    #(18): ResnetBlock((conv_block): Sequential(
     # (0): ReflectionPad2d((1, 1, 1, 1))
     # (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
     # (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
@@ -114,6 +100,8 @@ if __name__ == '__main__':
     output = resnet.model(sample['A'].cuda())
     # print(len(output))
     print(len(activation['Conv2d']))
+
+    print(activation['Conv2d'][0])
 
     #output_img = tensor_to_image(activation['Conv2d'])
     #output_img.save('Conv2d.jpg')
