@@ -101,7 +101,7 @@ if __name__ == '__main__':
     print(len(activation['tanh_layer']['output'][0][0][1]))
 
 
-    output_img = tensor_to_image(activation['tanh_layer']['output'])
+    output_img = tensor_to_image(activation['tanh_layer']['output'][0])
     output_img.save('tanh_layer.jpg')
     #print(activation)
 
