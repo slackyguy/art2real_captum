@@ -103,8 +103,8 @@ if __name__ == '__main__':
     # (4): ReflectionPad2d((1, 1, 1, 1))
     # (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
     # (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
-    print(model.netG_A)
-    conv_layer = list(model.netG_A.children())[18].conv_block
+    #print(model.netG_A)
+    conv_layer = model.netG_A.module.model[18].conv_block
     print(conv_layer)
     target_layers = [conv_layer] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
@@ -115,7 +115,7 @@ if __name__ == '__main__':
     output = resnet.model(sample['A'].cuda())
     # print(len(output))
     activation['Conv2d']
-    print(activation)
+    #print(activation)
 
     # activations_and_grads = ActivationsAndGradients(
     #         resnet.model, target_layers, None) # reshape_transform
