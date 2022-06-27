@@ -80,6 +80,8 @@ if __name__ == '__main__':
 
     #resnet = models.resnet101(pretrained=True) #resnet50
     #target_layers = [resnet.layer4[-1]]
+
+    print(model.netG_A)
     
     #(18): ResnetBlock((conv_block): Sequential(
     # (0): ReflectionPad2d((1, 1, 1, 1))
