@@ -93,15 +93,14 @@ if __name__ == '__main__':
     conv2d_layer = model.netG_A.module.model[18].conv_block[5]
     tanh_layer = model.netG_A.module.model[27]
 
-    tanh_layer.register_forward_hook(get_activation('Conv2d'))
+    tanh_layer.register_forward_hook(get_activation('tanh_layer'))
     output = resnet.model(sample['A'].cuda())
 
-    print(len(activation['Conv2d']['output'][0]))
-    print(len(activation['Conv2d']['output'][0][1]))
+    
 
 
-    #output_img = tensor_to_image(activation['Conv2d'])
-    #output_img.save('Conv2d.jpg')
+    output_img = tensor_to_image(activation['tanh_layer']['output'])
+    output_img.save('tanh_layer.jpg')
     #print(activation)
 
     # activations_and_grads = ActivationsAndGradients(
