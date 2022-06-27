@@ -115,8 +115,8 @@ if __name__ == '__main__':
     # print(len(output))
     print(len(activation['Conv2d']))
 
-    output_img = tensor_to_image(activation['Conv2d'])
-    output_img.save('Conv2d.jpg')
+    #output_img = tensor_to_image(activation['Conv2d'])
+    #output_img.save('Conv2d.jpg')
     #print(activation)
 
     # activations_and_grads = ActivationsAndGradients(
