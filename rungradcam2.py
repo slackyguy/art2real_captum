@@ -103,12 +103,13 @@ if __name__ == '__main__':
     # (4): ReflectionPad2d((1, 1, 1, 1))
     # (5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1))
     # (6): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
-    target_layers = [model.netG_A[18].conv_block[1]] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
+    conv_layer = list(model.netG_A.children())[18].conv_block[5]
+    target_layers = [conv_layer] #torch.nn.Sequential(*list(resnet.children())[:layers_len]) #:-1
     #print(len(list(target_layers)))
 
     #resnet.model.fc3.register_forward_hook(get_activation('fc3'))
 
-    model.netG_A.model[18].conv_block[5].register_forward_hook(get_activation('Conv2d'))
+    conv_layer.register_forward_hook(get_activation('Conv2d'))
     output = resnet.model(sample['A'].cuda())
     # print(len(output))
     activation['Conv2d']
